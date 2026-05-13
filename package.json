@@ -9,10 +9,12 @@
     "db:migrate": "bun run src/db/migrate.ts"
   },
   "dependencies": {
-    "elysia": "^1.2.25",
     "@elysiajs/html": "^1.2.0",
     "@elysiajs/static": "^1.2.0",
-    "@libsql/client": "^0.15.0"
+    "@kitajs/html": "^4.2.13",
+    "@kitajs/ts-html-plugin": "^4.1.4",
+    "@libsql/client": "^0.15.0",
+    "elysia": "^1.2.25"
   },
   "devDependencies": {
     "@types/bun": "^1.2.0",
