@@ -1,8 +1,8 @@
 import { Elysia } from "elysia";
 import { staticPlugin } from "@elysiajs/static";
-import { homeRoutes } from "./routes/home";
-import { npfRoutes } from "./routes/npf";
-import { competitionRoutes } from "./routes/competitions";
+import { homeRoutes } from "./routes/home.tsx";
+import { npfRoutes } from "./routes/npf.tsx";
+import { competitionRoutes } from "./routes/competitions.tsx";
 import { migrate } from "./db/migrate";
 
 // Run migrations on startup

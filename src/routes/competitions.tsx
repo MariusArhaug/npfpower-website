@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
-import { layout } from "../views/layouts/base";
-import { resultsPage, competitionsList } from "../views/pages/results";
-import { recordsPage } from "../views/pages/records";
+import { Layout } from "../views/layouts/base.tsx";
+import { ResultsPage, CompetitionsList } from "../views/pages/results.tsx";
+import { RecordsPage } from "../views/pages/records.tsx";
 import { getAllCompetitions, getRecordCategories } from "../services/competitions";
 import db from "../db/client";
 
@@ -9,16 +9,16 @@ export const competitionRoutes = new Elysia()
   .get("/results", async ({ request, set }) => {
     set.headers["content-type"] = "text/html; charset=utf-8";
     const competitions = await getAllCompetitions();
-    const content = resultsPage(competitions);
+    const content = <ResultsPage competitions={competitions} />;
     if (request.headers.get("hx-request")) return content;
-    return layout("Results", content, "results");
+    return <Layout title="Results" activePage="results">{content}</Layout>;
   })
   .get("/results/search", async ({ query, set }) => {
     set.headers["content-type"] = "text/html; charset=utf-8";
     const q = (query.q as string) ?? "";
     if (!q.trim()) {
       const competitions = await getAllCompetitions();
-      return competitionsList(competitions);
+      return <CompetitionsList competitions={competitions} />;
     }
     const result = await db.execute({
       sql: `SELECT * FROM competitions
@@ -26,12 +26,12 @@ export const competitionRoutes = new Elysia()
             ORDER BY year DESC`,
       args: [`%${q}%`, `%${q}%`, `%${q}%`],
     });
-    return competitionsList(result.rows as any);
+    return <CompetitionsList competitions={result.rows as any} />;
   })
   .get("/records", async ({ request, set }) => {
     set.headers["content-type"] = "text/html; charset=utf-8";
     const records = await getRecordCategories();
-    const content = recordsPage(records);
+    const content = <RecordsPage records={records} />;
     if (request.headers.get("hx-request")) return content;
-    return layout("Records", content, "records");
+    return <Layout title="Records" activePage="records">{content}</Layout>;
   });
