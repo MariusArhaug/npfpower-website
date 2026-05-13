@@ -1,0 +1,21 @@
+{
+  "name": "npfpower-website",
+  "version": "0.1.0",
+  "description": "Nordic Powerlifting Federation website - BETH stack",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "db:seed": "bun run src/db/seed.ts",
+    "db:migrate": "bun run src/db/migrate.ts"
+  },
+  "dependencies": {
+    "elysia": "^1.2.25",
+    "@elysiajs/html": "^1.2.0",
+    "@elysiajs/static": "^1.2.0",
+    "@libsql/client": "^0.15.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "typescript": "^5.7.0"
+  }
+}
