@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
 import { Layout } from "../views/layouts/base.tsx";
-import { HomePage, PostPage } from "../views/pages/home.tsx";
+import { HomePage, PostPage, heroHtml } from "../views/pages/home.tsx";
 import { getAllPosts, getPostBySlug } from "../services/posts";
 
 export const homeRoutes = new Elysia()
@@ -12,7 +12,7 @@ export const homeRoutes = new Elysia()
     if (request.headers.get("hx-request")) {
       return content;
     }
-    return <Layout title="News" activePage="home">{content}</Layout>;
+    return <Layout title="News" activePage="home" heroContent={heroHtml}>{content}</Layout>;
   })
   .get("/post/:slug", async ({ params, request, set }) => {
     set.headers["content-type"] = "text/html; charset=utf-8";
