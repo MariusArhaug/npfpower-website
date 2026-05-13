@@ -4,9 +4,10 @@ import { homePage, postPage } from "../views/pages/home";
 import { getAllPosts, getPostBySlug } from "../services/posts";
 
 export const homeRoutes = new Elysia()
-  .get("/", async ({ request }) => {
+  .get("/", async ({ request, set }) => {
     const posts = await getAllPosts();
     const content = homePage(posts);
+    set.headers["content-type"] = "text/html; charset=utf-8";
 
     if (request.headers.get("hx-request")) {
       return content;
@@ -14,6 +15,7 @@ export const homeRoutes = new Elysia()
     return layout("News", content, "home");
   })
   .get("/post/:slug", async ({ params, request, set }) => {
+    set.headers["content-type"] = "text/html; charset=utf-8";
     const post = await getPostBySlug(params.slug);
     if (!post) {
       set.status = 404;

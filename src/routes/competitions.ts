@@ -6,13 +6,15 @@ import { getAllCompetitions, getRecordCategories } from "../services/competition
 import db from "../db/client";
 
 export const competitionRoutes = new Elysia()
-  .get("/results", async ({ request }) => {
+  .get("/results", async ({ request, set }) => {
+    set.headers["content-type"] = "text/html; charset=utf-8";
     const competitions = await getAllCompetitions();
     const content = resultsPage(competitions);
     if (request.headers.get("hx-request")) return content;
     return layout("Results", content, "results");
   })
-  .get("/results/search", async ({ query }) => {
+  .get("/results/search", async ({ query, set }) => {
+    set.headers["content-type"] = "text/html; charset=utf-8";
     const q = (query.q as string) ?? "";
     if (!q.trim()) {
       const competitions = await getAllCompetitions();
@@ -26,7 +28,8 @@ export const competitionRoutes = new Elysia()
     });
     return competitionsList(result.rows as any);
   })
-  .get("/records", async ({ request }) => {
+  .get("/records", async ({ request, set }) => {
+    set.headers["content-type"] = "text/html; charset=utf-8";
     const records = await getRecordCategories();
     const content = recordsPage(records);
     if (request.headers.get("hx-request")) return content;
