@@ -1,9 +1,10 @@
-import db from "./client";
+import { getDb } from "./client";
 import { migrate } from "./migrate";
 
 async function seed() {
   await migrate();
 
+  const db = getDb();
   console.log("Seeding database...");
 
   // --- Posts ---
@@ -68,10 +69,10 @@ async function seed() {
   ];
 
   for (const post of posts) {
-    await db.execute({
-      sql: `INSERT OR IGNORE INTO posts (title, slug, content, category, published_at) VALUES (?, ?, ?, ?, ?)`,
-      args: [post.title, post.slug, post.content, post.category, post.published_at],
-    });
+    await db.execute(
+      `INSERT OR IGNORE INTO posts (title, slug, content, category, published_at) VALUES (?, ?, ?, ?, ?)`,
+      [post.title, post.slug, post.content, post.category, post.published_at]
+    );
   }
 
   // --- Board Members ---
@@ -86,10 +87,10 @@ async function seed() {
   ];
 
   for (const m of members) {
-    await db.execute({
-      sql: `INSERT OR IGNORE INTO board_members (name, role, country, email, sort_order) VALUES (?, ?, ?, ?, ?)`,
-      args: [m.name, m.role, m.country, m.email, m.sort_order],
-    });
+    await db.execute(
+      `INSERT OR IGNORE INTO board_members (name, role, country, email, sort_order) VALUES (?, ?, ?, ?, ?)`,
+      [m.name, m.role, m.country, m.email, m.sort_order]
+    );
   }
 
   // --- Competitions ---
@@ -103,10 +104,10 @@ async function seed() {
   ];
 
   for (const c of competitions) {
-    await db.execute({
-      sql: `INSERT OR IGNORE INTO competitions (year, name, location, country) VALUES (?, ?, ?, ?)`,
-      args: [c.year, c.name, c.location, c.country],
-    });
+    await db.execute(
+      `INSERT OR IGNORE INTO competitions (year, name, location, country) VALUES (?, ?, ?, ?)`,
+      [c.year, c.name, c.location, c.country]
+    );
   }
 
   // --- Record categories ---
@@ -138,10 +139,10 @@ async function seed() {
   ];
 
   for (const r of records) {
-    await db.execute({
-      sql: `INSERT OR IGNORE INTO record_categories (discipline, gender, equipment, age_class, label, sort_order) VALUES (?, ?, ?, ?, ?, ?)`,
-      args: [r.discipline, r.gender, r.equipment, r.age_class, r.label, r.sort_order],
-    });
+    await db.execute(
+      `INSERT OR IGNORE INTO record_categories (discipline, gender, equipment, age_class, label, sort_order) VALUES (?, ?, ?, ?, ?, ?)`,
+      [r.discipline, r.gender, r.equipment, r.age_class, r.label, r.sort_order]
+    );
   }
 
   console.log("Seeding complete.");

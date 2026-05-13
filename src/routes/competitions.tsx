@@ -3,7 +3,7 @@ import { Layout } from "../views/layouts/base.tsx";
 import { ResultsPage, CompetitionsList } from "../views/pages/results.tsx";
 import { RecordsPage } from "../views/pages/records.tsx";
 import { getAllCompetitions, getRecordCategories } from "../services/competitions";
-import db from "../db/client";
+import { getDb } from "../db/client";
 
 export const competitionRoutes = new Elysia()
   .get("/results", async ({ request, set }) => {
@@ -20,12 +20,12 @@ export const competitionRoutes = new Elysia()
       const competitions = await getAllCompetitions();
       return <CompetitionsList competitions={competitions} />;
     }
-    const result = await db.execute({
-      sql: `SELECT * FROM competitions
+    const result = await getDb().execute(
+      `SELECT * FROM competitions
             WHERE CAST(year AS TEXT) LIKE ? OR location LIKE ? OR country LIKE ?
             ORDER BY year DESC`,
-      args: [`%${q}%`, `%${q}%`, `%${q}%`],
-    });
+      [`%${q}%`, `%${q}%`, `%${q}%`]
+    );
     return <CompetitionsList competitions={result.rows as any} />;
   })
   .get("/records", async ({ request, set }) => {

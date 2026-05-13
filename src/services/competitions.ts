@@ -1,4 +1,4 @@
-import db from "../db/client";
+import { getDb } from "../db/client";
 
 export interface Competition {
   id: number;
@@ -20,11 +20,15 @@ export interface RecordCategory {
 }
 
 export async function getAllCompetitions(): Promise<Competition[]> {
-  const result = await db.execute("SELECT * FROM competitions ORDER BY year DESC");
-  return result.rows as unknown as Competition[];
+  const result = await getDb().execute<Competition>(
+    "SELECT * FROM competitions ORDER BY year DESC"
+  );
+  return result.rows;
 }
 
 export async function getRecordCategories(): Promise<RecordCategory[]> {
-  const result = await db.execute("SELECT * FROM record_categories ORDER BY sort_order ASC");
-  return result.rows as unknown as RecordCategory[];
+  const result = await getDb().execute<RecordCategory>(
+    "SELECT * FROM record_categories ORDER BY sort_order ASC"
+  );
+  return result.rows;
 }
