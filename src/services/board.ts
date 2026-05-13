@@ -1,4 +1,4 @@
-import db from "../db/client";
+import { getDb } from "../db/client";
 
 export interface BoardMember {
   id: number;
@@ -10,6 +10,8 @@ export interface BoardMember {
 }
 
 export async function getAllBoardMembers(): Promise<BoardMember[]> {
-  const result = await db.execute("SELECT * FROM board_members ORDER BY sort_order ASC");
-  return result.rows as unknown as BoardMember[];
+  const result = await getDb().execute<BoardMember>(
+    "SELECT * FROM board_members ORDER BY sort_order ASC"
+  );
+  return result.rows;
 }

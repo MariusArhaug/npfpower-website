@@ -1,4 +1,4 @@
-import db from "./client";
+import { getDb } from "./client";
 
 const migrations = [
   // News/posts table
@@ -54,6 +54,7 @@ const migrations = [
 ];
 
 export async function migrate() {
+  const db = getDb();
   console.log("Running migrations...");
   for (const sql of migrations) {
     await db.execute(sql);
