@@ -12,7 +12,7 @@ export function layout(title: string, content: string, activePage = ""): string 
   <header class="site-header">
     <div class="container">
       <a href="/" class="logo">
-        <img src="/public/images/npf-logo.jpg" alt="NPF Logo" />
+        <img src="/public/images/npf-logo.jpg" alt="NPF Logo" width="44" height="44" />
         <div class="logo-text">
           <strong>NPF</strong>
           <span>Nordic Powerlifting Federation</span>
