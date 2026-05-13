@@ -10,10 +10,14 @@ export function layout(title: string, content: string, activePage = ""): string 
 </head>
 <body>
   <header class="site-header">
+    <div class="header-accent"></div>
     <div class="container">
       <a href="/" class="logo">
-        <strong>NPF</strong>
-        <span>Nordic Powerlifting Federation</span>
+        <img src="/public/images/npf-logo.jpg" alt="NPF Logo" width="44" height="44" />
+        <div class="logo-text">
+          <strong>NPF</strong>
+          <span>Nordic Powerlifting Federation</span>
+        </div>
       </a>
       <nav class="main-nav">
         <ul>
@@ -34,8 +38,38 @@ export function layout(title: string, content: string, activePage = ""): string 
   </main>
 
   <footer class="site-footer">
-    <div class="container">
-      <p>&copy; ${new Date().getFullYear()} Nordic Powerlifting Federation. Founded 1975.</p>
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <img src="/public/images/npf-logo.jpg" alt="NPF" width="56" height="56" class="footer-logo" />
+            <p class="footer-tagline">Nordic Powerlifting Federation</p>
+            <p class="footer-since">Est. 1975</p>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/results">Competition Results</a></li>
+              <li><a href="/records">Nordic Records</a></li>
+              <li><a href="/npf/bylaws">Bylaws</a></li>
+              <li><a href="/npf/board">Board Members</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <p>President: Sofia Kamlund</p>
+            <p><a href="mailto:sofia.kamlund@styrkelyft.se">sofia.kamlund@styrkelyft.se</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="footer-bottom-inner">
+          <p>&copy; ${new Date().getFullYear()} Nordic Powerlifting Federation</p>
+          <p class="footer-credit">Developed by <a href="https://github.com/MariusArhaug" target="_blank">Marius Arhaug</a></p>
+        </div>
+      </div>
     </div>
   </footer>
 </body>
