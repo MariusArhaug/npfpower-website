@@ -8,37 +8,51 @@ function formatDate(dateStr: string): string {
   });
 }
 
+export const heroHtml = `
+<section class="hero">
+  <h1>Nordic Powerlifting Federation</h1>
+  <div class="gold-line"></div>
+  <p>Uniting powerlifters across the Nordic countries since 1975</p>
+</section>`;
+
 export function HomePage({ posts }: { posts: Post[] }) {
   return (
     <section class="page-section">
-      <h1>Latest News</h1>
-      <div id="posts-list">
-        {posts.map((post) => (
-          <PostCard post={post} />
+      <div class="section-header">
+        <div class="shadow-text">NEWS</div>
+        <h1>Latest News</h1>
+      </div>
+      <div class="posts-grid" id="posts-list">
+        {posts.map((post, i) => (
+          <PostCard post={post} index={i} />
         ))}
       </div>
     </section>
   );
 }
 
-export function PostCard({ post }: { post: Post }) {
+export function PostCard({ post, index = 0 }: { post: Post; index?: number }) {
   const date = formatDate(post.published_at);
 
   return (
-    <article class="post-card">
-      <h2>
-        <a
-          href={`/post/${post.slug}`}
-          hx-get={`/post/${post.slug}`}
-          hx-target="main"
-          hx-swap="innerHTML"
-          hx-push-url="true"
-        >
-          {post.title}
-        </a>
-      </h2>
-      <time datetime={post.published_at}>{date}</time>
-      <span class="badge">{post.category.toUpperCase()}</span>
+    <article class={`post-card reveal`} style={`transition-delay: ${index * 0.1}s`}>
+      <div class="post-card-header">
+        <h2>
+          <a
+            href={`/post/${post.slug}`}
+            hx-get={`/post/${post.slug}`}
+            hx-target="main"
+            hx-swap="innerHTML"
+            hx-push-url="true"
+          >
+            {post.title}
+          </a>
+        </h2>
+      </div>
+      <div class="post-card-body">
+        <time datetime={post.published_at}>{date}</time>
+        <span class="badge">{post.category.toUpperCase()}</span>
+      </div>
     </article>
   );
 }

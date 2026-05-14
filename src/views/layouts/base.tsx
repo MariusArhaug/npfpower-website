@@ -15,7 +15,8 @@ export function Layout({
   title,
   activePage = "",
   children,
-}: PropsWithChildren<{ title: string; activePage?: string }>) {
+  heroContent,
+}: PropsWithChildren<{ title: string; activePage?: string; heroContent?: string }>) {
   return (
     <>
       {"<!DOCTYPE html>"}
@@ -62,6 +63,8 @@ export function Layout({
             </div>
           </header>
 
+          {heroContent ? (heroContent as "safe") : ""}
+
           <main class="container">{children}</main>
 
           <footer class="site-footer">
@@ -99,6 +102,15 @@ export function Layout({
               </div>
             </div>
           </footer>
+
+          <script>{`
+            document.addEventListener('DOMContentLoaded', () => {
+              const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+              }, { threshold: 0.1 });
+              document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+            });
+          `}</script>
         </body>
       </html>
     </>
